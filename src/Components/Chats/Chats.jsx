@@ -12,46 +12,45 @@ export default function Chats({setUser}) {
   const [users, setUsers] = useState([])
   const [messageSended, setMessagesended] = useState("")
   const {email} = auth.currentUser
-  const [Authors, setAuthors] = useState("")
-  console.log(messages)
+  const [Authors, setAuthors] = useState("milagros.griguol@mi.unc.edu.ar")
 
-  const renderMessages = async (emailOfUser) =>{
-    const allMessages = []        
-    const Myq = query(collection(db, "messages", email,"chats"));
-    onSnapshot(Myq, (snapshot) => {
-      snapshot.forEach((change) => {
-        if (change.id === emailOfUser ){
-          change.data().messagesArray.forEach(element => {
-            allMessages.push(element)
-          }); 
 
-        }
-      });
-    });   
-    const UserQ = query(collection(db, "messages",emailOfUser,"chats"));
-    onSnapshot(UserQ, (snapshot) => {
-      console.log("cambio de base")
-      snapshot.forEach((change) => {
-        if (change.id === email){
-          change.data().messagesArray.forEach(element => {
-            allMessages.push(element)
-          }); 
-        }
-        allMessages.sort((a,b) =>{
-            if(a.createdAt < b.createdAt){
-                return -1
-            }else{
-                return 1
-            }
+  
+  onSnapshot(doc(db,"messages", email, "chats", Authors ), (doc) => {
+      const allMessages = []
+        doc.data().messagesArray.forEach((change)=>{
+          allMessages.push(change)
         })
-        setMessages(allMessages)
+        messages.push(...allMessages)
       });
-    }); 
-  }
+      onSnapshot(doc(db,"messages",Authors, "chats", email ), (doc) => {
+        const allMessages = []
+        doc.data().messagesArray.forEach((change)=>{
+          allMessages.push(change)
+        })
+        messages.push(...allMessages)
+
+      });
+
+        /* allMessages.sort((a,b) =>{
+          if(a.createdAt < b.createdAt){
+              return -1
+          }else{
+              return 1
+          }
+        })
+        */
+
+
+
+       
+
+    
+  
+  console.log(messages)
 
   const setAuthorsName = async (displayName)=>{
     setAuthors(displayName)
-    renderMessages(displayName)
 
   }
 

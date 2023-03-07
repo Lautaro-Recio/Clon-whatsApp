@@ -19,4 +19,4 @@ export default function ChatMessages(props) {
 }
 
 
-//subir los mensajes correspondientes a cada chat (chatWhit mili van todos los mensajes de ese chat en un array) y despues hacer la consulta a la base de datos para traer los mensajes del chat de ambos usuarios
+// despues hacer la consulta a la base de datos para traer los mensajes del chat de ambos usuarios
