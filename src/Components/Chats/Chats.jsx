@@ -8,46 +8,41 @@ import User from '../UserContainer/User'
 import ChatMessages from './ChatMessages'
 
 export default function Chats({setUser}) {
-  const [messages, setMessages] = useState([])
+  const [Mymessages, setMyMessages] = useState([])
+  const [OtherUsermessages, setOtherUsermessages] = useState([])
   const [users, setUsers] = useState([])
   const [messageSended, setMessagesended] = useState("")
   const {email} = auth.currentUser
-  const [Authors, setAuthors] = useState("milagros.griguol@mi.unc.edu.ar")
+  const [Authors, setAuthors] = useState("")
 
+  if(Authors){
 
-  
-  onSnapshot(doc(db,"messages", email, "chats", Authors ), (doc) => {
+    onSnapshot(doc(db,"messages", email, "chats", Authors ), (doc) => {
       const allMessages = []
+      
         doc.data().messagesArray.forEach((change)=>{
           allMessages.push(change)
         })
-        messages.push(...allMessages)
+        setMyMessages(allMessages)
       });
       onSnapshot(doc(db,"messages",Authors, "chats", email ), (doc) => {
         const allMessages = []
         doc.data().messagesArray.forEach((change)=>{
           allMessages.push(change)
         })
-        messages.push(...allMessages)
+        setOtherUsermessages(allMessages)
 
       });
+    }
 
-        /* allMessages.sort((a,b) =>{
+      const messages = Mymessages.concat(OtherUsermessages)
+      messages.sort((a,b) =>{
           if(a.createdAt < b.createdAt){
               return -1
           }else{
               return 1
           }
         })
-        */
-
-
-
-       
-
-    
-  
-  console.log(messages)
 
   const setAuthorsName = async (displayName)=>{
     setAuthors(displayName)
@@ -117,7 +112,7 @@ export default function Chats({setUser}) {
         <div className='h-full bg-[#1c1d1f] border-r-[1px] border-gray-400'>
           {users.map(user => {
             return(
-              <Online message={user} setAuthorsName={setAuthorsName} setMessages={setMessages}/>
+              <Online message={user} setAuthorsName={setAuthorsName} />
             )})}
         </div>
           <div className='h-full' >
