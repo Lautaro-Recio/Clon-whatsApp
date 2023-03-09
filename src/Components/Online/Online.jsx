@@ -11,6 +11,7 @@ export default function Online(props) {
 
     const returnMessages = async (e) =>{
         props.setAuthorsName(email)
+        props.setNameOfUser(displayName)
 
     }
 

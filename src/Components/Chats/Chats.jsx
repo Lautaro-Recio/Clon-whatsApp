@@ -2,15 +2,17 @@ import { collection, onSnapshot, orderBy, limit,query, doc} from 'firebase/fires
 import React, { useEffect, useState } from 'react'
 import { auth, db } from '../../../Firebase'
 import Online from '../Online/Online'
-import UserContainer from '../UserContainer/UserContainer'
+import SignOut from '../SignWhitGoogle/SignOut'
 import ChatMessages from './ChatMessages'
 import FormMessages from './FormMessages'
+
 export default function Chats({setUser}) {
   const [Mymessages, setMyMessages] = useState([])
   const [OtherUsermessages, setOtherUsermessages] = useState([])
   const [users, setUsers] = useState([])
   const {email} = auth.currentUser
   const [Authors, setAuthors] = useState("")
+  const [NameOfUser, setNameOfUser] = useState("")
 
   if(Authors){
     //onSnapshot esta escuchando ambos documentos para despues traer los mensajes guardados
@@ -67,16 +69,19 @@ export default function Chats({setUser}) {
   },[])
 
   return (
-    <div >
-      <UserContainer setUser={setUser}/> 
+    <div>
+      <div className='flex items-center place-content-between p-4 border-b-2 border-b-gray-400 bg-[#1c1d1f]'>
+        <SignOut  setFalseUser={setUser}/>
+        <p className='px-8 py-4 text-right bg-[#1c1d1f] text-gray-300'>{NameOfUser}</p>
+      </div>
       <div className='grid grid-cols-[1fr_4fr]'>
         <div className='h-full bg-[#1c1d1f] border-r-[1px] border-gray-400'>
           {users.map(user => {
             return(
-              <Online message={user} setAuthorsName={setAuthorsName} />
-            )})}
+              <Online message={user} setAuthorsName={setAuthorsName} setNameOfUser={setNameOfUser} />
+              )})}
         </div>
-          <div className='h-full' >
+          <div className='min-h-[1000px]  ' >
             {messages.map(msg => {
               return(
                 <ChatMessages message={msg} />   

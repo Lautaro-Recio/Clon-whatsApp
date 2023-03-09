@@ -18,5 +18,3 @@ export default function ChatMessages(props) {
   )
 }
 
-
-// despues hacer la consulta a la base de datos para traer los mensajes del chat de ambos usuarios
