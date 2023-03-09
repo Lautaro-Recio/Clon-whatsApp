@@ -1,58 +1,56 @@
-import { async } from '@firebase/util'
-import { collection, onSnapshot, orderBy, limit, addDoc, serverTimestamp, query, doc, updateDoc, arrayUnion, getDoc, where, getDocs, setDoc} from 'firebase/firestore'
+import { collection, onSnapshot, orderBy, limit,query, doc} from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { auth, db } from '../../../Firebase'
 import Online from '../Online/Online'
-import SignOut from '../SignWhitGoogle/SignOut'
-import User from '../UserContainer/User'
+import UserContainer from '../UserContainer/UserContainer'
 import ChatMessages from './ChatMessages'
-
+import FormMessages from './FormMessages'
 export default function Chats({setUser}) {
   const [Mymessages, setMyMessages] = useState([])
   const [OtherUsermessages, setOtherUsermessages] = useState([])
   const [users, setUsers] = useState([])
-  const [messageSended, setMessagesended] = useState("")
   const {email} = auth.currentUser
   const [Authors, setAuthors] = useState("")
 
   if(Authors){
-
+    //onSnapshot esta escuchando ambos documentos para despues traer los mensajes guardados
     onSnapshot(doc(db,"messages", email, "chats", Authors ), (doc) => {
       const allMessages = []
-      
-        doc.data().messagesArray.forEach((change)=>{
-          allMessages.push(change)
-        })
+        if(doc.data()){
+          doc.data().messagesArray.forEach((change)=>{
+            allMessages.push(change)
+          })
+        }
         setMyMessages(allMessages)
       });
       onSnapshot(doc(db,"messages",Authors, "chats", email ), (doc) => {
         const allMessages = []
-        doc.data().messagesArray.forEach((change)=>{
-          allMessages.push(change)
-        })
+        if(doc.data()){
+          doc.data().messagesArray.forEach((change)=>{
+            allMessages.push(change)
+          })
+        }
         setOtherUsermessages(allMessages)
-
       });
     }
-
+    
+    //Acomoda el array de los mensajes por el timestamp
       const messages = Mymessages.concat(OtherUsermessages)
       messages.sort((a,b) =>{
-          if(a.createdAt < b.createdAt){
-              return -1
+        if(a.createdAt < b.createdAt){
+            return -1
           }else{
-              return 1
+            return 1
           }
-        })
+      })
 
   const setAuthorsName = async (displayName)=>{
     setAuthors(displayName)
 
   }
 
-  
-
   useEffect(()=>{
-    
+    //Trae a los usuarios online y offline
     const q = query(collection(db,"messages"), orderBy("createdAt"), limit(100))
       const unsuscribe = onSnapshot(q,(querySnapshot)=>{
       const usersArray = []
@@ -65,49 +63,12 @@ export default function Chats({setUser}) {
       }); 
       setUsers(usersArray)
     })
-
-   
     return unsuscribe
   },[])
 
-
- 
-  
-  const sendMessage = async (e) =>{
-    e.preventDefault()
-    const myRef = doc(db, "messages",email, "chats",Authors);
-    const fecha = new Date().getTime()
-      await getDoc(myRef).then(docSnap=>{
-        if (docSnap.exists()) {
-          updateDoc(myRef, {
-            messagesArray: arrayUnion({
-              messageSended,
-              createdAt:fecha,
-              autorOfmessage:email
-            })         
-          });
-        } else {
-          setDoc(myRef,{messagesArray:[]})
-          updateDoc(myRef, {
-            messagesArray: arrayUnion({
-              messageSended,
-              createdAt:fecha,
-              autorOfmessage:email
-            })
-          });
-        }
-      })
-      setMessagesended("")
-      
-    }
-  
   return (
     <div >
-      <div className='flex items-center place-content-between p-4 border-b-2 border-b-gray-400 bg-[#1c1d1f]'>
-          <User/>
-          <h1 className='text-xl font-bold border-2 text-white border-gray-400 rounded-lg bg-[#373263c9] justify-center items-center flex p-4 '>Lets talk</h1>
-          <SignOut setFalseUser={setUser}/>
-      </div>
+      <UserContainer setUser={setUser}/> 
       <div className='grid grid-cols-[1fr_4fr]'>
         <div className='h-full bg-[#1c1d1f] border-r-[1px] border-gray-400'>
           {users.map(user => {
@@ -123,13 +84,7 @@ export default function Chats({setUser}) {
             })}
           </div>
       </div>
-      { Authors !== "" && (
-        <form onSubmit={sendMessage} className="flex place-content-between">
-          <input className='w-full border-2 border-gray-400 ' value={messageSended} onChange={(e)=>{setMessagesended(e.target.value)}} type="text" placeholder='Mensaje' />
-          <button className='bg-green-400 px-4 py-2' type='submit' disabled={!messageSended}>Enviar</button>
-        </form>
-      )
-      }
+        <FormMessages email={email} Authors={Authors}/> 
     </div>
   )
 }
