@@ -6,10 +6,7 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'chat': "url('./src/assets/imgs/wppFondo.jpg')",
-        
-      }
+      
     },
   },
   plugins: [],

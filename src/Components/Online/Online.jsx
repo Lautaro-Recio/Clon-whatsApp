@@ -12,6 +12,7 @@ export default function Online(props) {
     const returnMessages = async (e) =>{
         props.setAuthorsName(email)
         props.setNameOfUser(displayName)
+        props.setAuthorPhoto(photoURL)
 
     }
 
@@ -36,4 +37,3 @@ export default function Online(props) {
 }
 
 
-//hacer el setBgOnline en el componente padre para que cambie de color en el chat que se esta leyendo, hacer subida al servidor de github, arreglar estilos, Version mobile

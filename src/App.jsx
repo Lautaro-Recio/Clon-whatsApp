@@ -3,7 +3,7 @@ import { useState } from "react";
 import { auth, db } from "../Firebase";
 import Chats from "./Components/Chats/Chats";
 import WelcomePage from "./Components/Pages/WelcomePage";
-
+import chat from "./assets/imgs/wppFondo.jpg"
 export default function App() {
   const [authUser, setAuthUser] = useState(false)
 
@@ -28,7 +28,7 @@ export default function App() {
     auth.signOut
   }
   return (
-    <div className="bg-chat">
+    <div className={` bg-[url('./assets/imgs/wppFondo.jpg')]`}>
       {authUser === false ?(
           <WelcomePage setUser={setTrueUser} />
         ):(

@@ -13,7 +13,9 @@ export default function Chats({setUser}) {
   const {email} = auth.currentUser
   const [Authors, setAuthors] = useState("")
   const [NameOfUser, setNameOfUser] = useState("")
+  const [AuthorPhoto, setAuthorPhoto] = useState("")
 
+  
   if(Authors){
     //onSnapshot esta escuchando ambos documentos para despues traer los mensajes guardados
     onSnapshot(doc(db,"messages", email, "chats", Authors ), (doc) => {
@@ -72,13 +74,16 @@ export default function Chats({setUser}) {
     <div>
       <div className='flex items-center place-content-between p-4 border-b-2 border-b-gray-400 bg-[#1c1d1f]'>
         <SignOut  setFalseUser={setUser}/>
-        <p className='px-8 py-4 text-right bg-[#1c1d1f] text-gray-300'>{NameOfUser}</p>
+        <div className='flex border-2 border-gray-400 rounded-lg bg-[#373263c9] justify-center items-center w-64 h-12'>
+          <img className='w-8 h-8 ml-4 rounded-[100%] ' src={AuthorPhoto} alt="Avatar" />
+          <p className='px-4 py-2 text-right   text-white  '>{NameOfUser}</p>
+        </div>
       </div>
       <div className='grid grid-cols-[1fr_4fr]'>
         <div className='h-full bg-[#1c1d1f] border-r-[1px] border-gray-400'>
           {users.map(user => {
             return(
-              <Online message={user} setAuthorsName={setAuthorsName} setNameOfUser={setNameOfUser} />
+              <Online message={user} setAuthorsName={setAuthorsName} setNameOfUser={setNameOfUser} setAuthorPhoto={setAuthorPhoto} />
               )})}
         </div>
           <div className='min-h-[1000px]  ' >

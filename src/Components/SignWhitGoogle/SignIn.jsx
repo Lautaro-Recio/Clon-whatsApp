@@ -5,8 +5,8 @@ import { auth, db, googleProvider } from "../../../Firebase.js"
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
 export default function SignIn({setUserTrue}) {
     const SignWhitGoogle = () =>{
-        const {uid, photoURL, displayName, email } = auth.currentUser
         signInWithPopup(auth,googleProvider)
+        const {uid, photoURL, displayName, email } = auth.currentUser
 
         
         getDoc(doc(db, "messages", email)).then(docSnap => {
