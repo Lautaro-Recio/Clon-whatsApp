@@ -18,9 +18,9 @@ export default function Online(props) {
 
     return (
         <>
-            { email !== myEmail && 
+            { email !== myEmail && !props.OpenNav ?  
                 (
-                    <button key={email} onClick={()=>returnMessages()} className={`w-full p-4 border-[1px] border-gray-400 mb-2 text-gray-300  gap-2`}>
+                    <button key={email} onClick={()=>returnMessages()} className={`w-full p-4 border-[1px] border-gray-400 mb-2 text-gray-300 gap-2 md:w-full `}>
                         <div className='flex'>
                             <img className='h-6 w-6 rounded-full mr-2' src={photoURL} alt="Avatar" />
                             <p className='text' >{displayName}</p>
@@ -30,6 +30,10 @@ export default function Online(props) {
                             <span className={`rounded-full block h-[10px] w-[10px] ${classOnline}`}></span>
                         </div>
                     </button>
+                ) : (
+                    <>
+                    
+                    </>
                 )
             }
         </>

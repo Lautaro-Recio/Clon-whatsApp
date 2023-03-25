@@ -3,7 +3,6 @@ import { useState } from "react";
 import { auth, db } from "../Firebase";
 import Chats from "./Components/Chats/Chats";
 import WelcomePage from "./Components/Pages/WelcomePage";
-import chat from "./assets/imgs/wppFondo.jpg"
 export default function App() {
   const [authUser, setAuthUser] = useState(false)
 
@@ -17,13 +16,11 @@ export default function App() {
   const setTrueUser = () =>{
     setAuthUser(true)
     const {email} = auth.currentUser
-
     getLinkById(email,true)
   }
   const setFalseUser = () =>{
     setAuthUser(false)
     const {email} = auth.currentUser
-
     getLinkById(email,false)
     auth.signOut
   }
