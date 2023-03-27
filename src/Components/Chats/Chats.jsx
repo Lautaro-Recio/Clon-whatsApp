@@ -97,9 +97,9 @@ export default function Chats({setUser}) {
             </button> 
             )
           }
-          <div className='flex gap-4 justify-center items-center'>
+          <div className=' gap-4 hidden md:flex justify-center items-center'>
             <img src={logo} alt="logo" className='w-10 h-10'/>
-            <p className='text-white text-xl '>Lets talk</p>
+            <p className='text-white text-xl  '>Lets talk</p>
           </div>
         <ChatWhit AuthorPhoto={AuthorPhoto} NameOfUser={NameOfUser}/>
       </div>
@@ -122,7 +122,7 @@ export default function Chats({setUser}) {
           <SignOut setFalseUser={setUser}/>
 
         </div>
-        <div className='w-full md:h-[1000px]'>
+        <div className='w-full h-[700px] md:h-[1000px]'>
             {messages.map(msg => {
               return(
                 <ChatMessages message={msg} />   
