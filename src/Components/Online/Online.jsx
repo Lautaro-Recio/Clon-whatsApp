@@ -13,7 +13,7 @@ export default function Online(props) {
         props.setAuthorsName(email)
         props.setNameOfUser(displayName)
         props.setAuthorPhoto(photoURL)
-
+        props.closeMenu()
     }
 
     return (

@@ -9,13 +9,18 @@ const sendMessage = async (e) =>{
     e.preventDefault()
     const myRef = doc(db, "messages",props.email, "chats",props.Authors);
     const fecha = new Date().getTime()
+    const hours = new Date().getHours()
+    const minutes = new Date().getMinutes()
+
       await getDoc(myRef).then(docSnap=>{
         if (docSnap.exists()) {
           updateDoc(myRef, {
             messagesArray: arrayUnion({
               messageSended,
               createdAt:fecha,
-              autorOfmessage:props.email
+              autorOfmessage:props.email,
+              hours,
+              minutes
             })         
           });
         } else {
@@ -24,7 +29,9 @@ const sendMessage = async (e) =>{
             messagesArray: arrayUnion({
               messageSended,
               createdAt:fecha,
-              autorOfmessage:props.email
+              autorOfmessage:props.email,
+              hours,
+              minutes
             })
           });
         }
@@ -36,7 +43,7 @@ const sendMessage = async (e) =>{
     return (
     <>
         { props.Authors && (
-            <form onSubmit={sendMessage} className="flex place-content-between">
+            <form onSubmit={sendMessage} className="flex place-content-between sticky w-full bottom-0">
                 <input className='w-full border-2 border-gray-400 ' value={messageSended} onChange={(e)=>{setMessagesended(e.target.value)}} type="text" placeholder='Mensaje' />
                 <button className='bg-green-400 px-4 py-2' type='submit' disabled={!messageSended}>Enviar</button>
             </form>

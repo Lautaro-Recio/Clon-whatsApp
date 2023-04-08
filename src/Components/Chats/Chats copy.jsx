@@ -9,7 +9,6 @@ import ChatWhit from './ChatWhit'
 import Menu from '../Icons/Menu'
 import CloseX from '../Icons/Closex'
 import logo from "../../assets/imgs/chat.png"
-import fondo from "../../assets/imgs/wppFondo.jpg"
 
 export default function Chats({setUser}) {
   const [Mymessages, setMyMessages] = useState([])
@@ -82,7 +81,7 @@ export default function Chats({setUser}) {
   },[])
 
   const openMenu = ()=>{
-    setClassOfNav(`fixed w-full block bg-[#1c1d1f] p-4 h-full scroll-y-auto md:w-1/4 top-16`)
+    setClassOfNav(`fixed w-full block bg-[#1c1d1f] p-4 md:border-r-2 md:border-r-gray-400 h-full scroll-y-auto md:w-1/4`)
     setOpenNav(false)
   }
   const closeMenu = ()=>{
@@ -122,9 +121,7 @@ export default function Chats({setUser}) {
           </div>
           <SignOut setFalseUser={setUser}/>
         </div>
-      </div>
 
-      <div className={`mt-20 h-[768px]`}>
         <div className={`w-full h-[${windowHeight}px] overflow-y-auto`}>
             {messages.map(msg => {
               return(
@@ -135,7 +132,6 @@ export default function Chats({setUser}) {
 
         <FormMessages email={email} Authors={Authors}/> 
       </div>
-
     </div>
   )
 }
