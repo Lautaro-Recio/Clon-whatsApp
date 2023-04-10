@@ -11,11 +11,12 @@ export default function ChatMessages(props) {
     
     <div className={`flex rounded-lg  text-white px-4 py-2  m-2 ${messages}`}>
       
-          <div className={` flex p-4 my-4 rounded-lg max-w-[400px] ${messagesAuthor}`}>
-            <p className='min-w-[50px] max-w-[400px] '>{props.message.messageSended}</p>
-            <p className='text-gray-300 text-xs mt-2 ml-2'>{props.message.hours}:{cero}{props.message.minutes}</p>
+          <div className={` p-4 my-4 rounded-lg max-w-[400px] ${messagesAuthor}`}>
+            <p className='min-w-[50px] mr-6  '>{props.message.messageSended}</p>
+            <p className='text-gray-300 text-end text-xs'>{props.message.hours}:{cero}{props.message.minutes}</p>
           </div>
     </div>
   )
 }
 
+//Hacer que cuand o llegue a 35 caracteres haga un salto de linea

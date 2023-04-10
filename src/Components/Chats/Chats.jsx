@@ -9,7 +9,6 @@ import ChatWhit from './ChatWhit'
 import Menu from '../Icons/Menu'
 import CloseX from '../Icons/Closex'
 import logo from "../../assets/imgs/chat.png"
-import fondo from "../../assets/imgs/wppFondo.jpg"
 
 export default function Chats({setUser}) {
   const [Mymessages, setMyMessages] = useState([])
@@ -21,11 +20,8 @@ export default function Chats({setUser}) {
   const [OpenNav, setOpenNav] = useState(true)
 
   const [ClassOfNav, setClassOfNav] = useState(`hidden`)
-  const [windowHeight, setwindowHeight] = useState(0)
 
-  useEffect(() => {
-    setwindowHeight(window.screen.height)
-  },[]);
+
 
   const {email} = auth.currentUser
   if(Authors){
@@ -82,7 +78,7 @@ export default function Chats({setUser}) {
   },[])
 
   const openMenu = ()=>{
-    setClassOfNav(`fixed w-full block bg-[#1c1d1f] p-4 h-full scroll-y-auto md:w-1/4 top-16`)
+    setClassOfNav(`fixed top-14 w-full block bg-[#1c1d1f] p-4 h-full scroll-y-auto md:w-1/4 md:top-16`)
     setOpenNav(false)
   }
   const closeMenu = ()=>{
@@ -113,7 +109,7 @@ export default function Chats({setUser}) {
       
       <div className='h-full block'>
         <div className={ClassOfNav}>
-          <div>
+          <div className='overflow-y-visible'>
             <p className='p-4 text-white text-lg'>Chats</p>
             { users.map(user => {
             return(
@@ -124,8 +120,8 @@ export default function Chats({setUser}) {
         </div>
       </div>
 
-      <div className={`mt-20 h-[768px]`}>
-        <div className={`w-full h-[${windowHeight}px] overflow-y-auto`}>
+      <div className={`mt-10 h-[768px]`}>
+        <div className={`w-full h-[768px] overflow-y-auto`}>
             {messages.map(msg => {
               return(
                 <ChatMessages message={msg} />   

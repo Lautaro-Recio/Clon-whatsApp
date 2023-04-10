@@ -23,7 +23,7 @@ export default function Online(props) {
                     <button key={email} onClick={()=>returnMessages()} className={`w-full p-4 border-[1px] border-gray-400 mb-2 text-gray-300 gap-2 md:w-full `}>
                         <div className='flex'>
                             <img className='h-6 w-6 rounded-full mr-2' src={photoURL} alt="Avatar" />
-                            <p className='text' >{displayName}</p>
+                            <p className='text-lg text-ellipsis overflow-hidden' >{displayName}</p>
                         </div>
                         <div className='flex ml-10 items-center gap-2'>
                             <p>{onlineText}</p>
